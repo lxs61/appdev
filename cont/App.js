@@ -1,26 +1,80 @@
 import React from 'react';
-import { Image, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Image, ScrollView, FlatList, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
-export default function NavigationBar() {
+const individualImages = [
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+];
+
+const pairImages = [
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+];
+
+const teamImages = [
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+  require('./assets/box.jpg'),
+];
+
+const renderHorizontalImages = (images) => (
+  <FlatList
+    horizontal
+    data={images}
+    renderItem={({ item }) => <Image source={item} style={styles.image} />}
+    keyExtractor={(item, index) => index.toString()}
+    showsHorizontalScrollIndicator={false}
+  />
+);
+
+export default function NavigationBar({ navigation }) {
   return (
     <View style={styles.container}>
       <View style={styles.topNav}>
         <Image style={styles.logo} source={require('./assets/logo.png')} />
-        <Text style={styles.text}>PHYSICAL EDUCATION</Text>
-        <Image style={styles.searchIcon} source={require('./assets/search1.png')} />
+        <Text style={styles.text}>SPORTS</Text>
       </View>
       <View style={styles.topLine} />
-      <View style={styles.contentArea} />
+
+      <ScrollView style={styles.contentArea}>
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>INDIVIDUAL</Text>
+          {renderHorizontalImages(individualImages)}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>PAIR</Text>
+          {renderHorizontalImages(pairImages)}
+        </View>
+
+        <View style={styles.section}>
+          <Text style={styles.sectionTitle}>TEAM</Text>
+          {renderHorizontalImages(teamImages)}
+        </View>
+
+        <View style={styles.extraSpace} />
+      </ScrollView>
+
       <View style={styles.bottomNavContainer}>
         <View style={styles.bottomLine} />
         <View style={styles.bottomNav}>
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={styles.navText}>SPORT</Text>
+          <TouchableOpacity onPress={() => console.log('Sport pressed')}>
+            <View style={styles.sportTextContainer}>
+              <Text style={styles.navText}>SPORT</Text>
+            </View>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => console.log('Exercise pressed')}>
             <Text style={styles.navText}>EXERCISE</Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}}>
+          <TouchableOpacity onPress={() => console.log('About pressed')}>
             <Text style={styles.navText}>ABOUT</Text>
           </TouchableOpacity>
         </View>
@@ -37,6 +91,7 @@ const styles = StyleSheet.create({
   topNav: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     paddingHorizontal: 16,
     marginTop: 45,
     paddingBottom: 3,
@@ -45,20 +100,11 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     resizeMode: 'contain',
-    marginRight: 0,
-    padding: 8,
   },
   text: {
     fontSize: 18,
     fontWeight: 'bold',
     color: 'red',
-    marginLeft: 31,
-  },
-  searchIcon: {
-    width: 29,
-    height: 29,
-    resizeMode: 'contain',
-    marginLeft: 35,
   },
   topLine: {
     height: 2,
@@ -66,13 +112,25 @@ const styles = StyleSheet.create({
     marginTop: 8,
     marginHorizontal: '5%',
   },
-  bottomLine: {
-    height: 2,
-    backgroundColor: 'rgba(128, 128, 128, 0.2)',
-    marginHorizontal: '5%',
-  },
   contentArea: {
     flex: 1,
+    paddingHorizontal: 16,
+    paddingTop: 20,
+  },
+  section: {
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    color: 'red', 
+  },
+  image: {
+    width: 107,
+    height: 172,
+    marginRight: 10,
+    borderRadius: 10,
   },
   bottomNavContainer: {
     position: 'absolute',
@@ -81,15 +139,28 @@ const styles = StyleSheet.create({
     right: 0,
     backgroundColor: 'white',
   },
+  bottomLine: {
+    height: 2,
+    backgroundColor: 'rgba(128, 128, 128, 0.2)',
+    marginHorizontal: '5%',
+  },
   bottomNav: {
     height: 60,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
+  sportTextContainer: {
+    backgroundColor: 'rgba(255, 0, 0, 0.2)', 
+    padding: 10,
+    borderRadius: 5,
+  },
   navText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'black',
+  },
+  extraSpace: {
+    height: 100, 
   },
 });
